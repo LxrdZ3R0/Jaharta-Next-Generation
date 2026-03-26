@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Exo+2:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap');
+@import './cyberpunk.css';
 
 @layer base {
   * {
@@ -63,34 +64,7 @@
 }
 
 /* ═══ Futuristic Card (Hyperplexed-style) ═══ */
-.futuristic-card-wrapper {
-  perspective: 1000px;
-}
-
-.futuristic-card {
-  position: relative;
-  border-radius: 0.5rem;
-  cursor: default;
-}
-
-.futuristic-card-inner {
-  will-change: transform;
-}
-
-/* Hover state: elevate border color */
-.futuristic-card:hover .futuristic-card-inner {
-  border-color: rgba(255, 255, 255, 0.1);
-}
-
-/* Rank pulse keyframe (used on SSS+ ranks) */
-@keyframes rankPulse {
-  0%, 100% {
-    text-shadow: 0 0 12px currentColor;
-  }
-  50% {
-    text-shadow: 0 0 28px currentColor, 0 0 50px currentColor;
-  }
-}
+/* → Moved to cyberpunk.css */
 
 /* Scanline overlay */
 body::after {

@@ -1,0 +1,322 @@
+/* ═══════════════════════════════════════════════════════════
+   CYBERPUNK 2077 EFFECTS — Jaharta Edition
+   Neon traces, holographic shimmer, chromatic aberration,
+   glitch bursts, data streams, CRT scan
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── NEON BORDER TRACE — light traveling around card edges ── */
+.cyber-border-trace {
+  position: absolute;
+  inset: -1px;
+  z-index: 1;
+  border-radius: 0.55rem;
+  opacity: 0;
+  transition: opacity 0.5s;
+  overflow: hidden;
+}
+
+.cyber-border-trace::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    var(--race, #00f0ff) 8%,
+    transparent 16%,
+    transparent 50%,
+    var(--race, #00f0ff) 58%,
+    transparent 66%
+  );
+  animation: borderSpin 4s linear infinite;
+}
+
+.cyber-border-trace::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border-radius: 0.5rem;
+  background: #08080f;
+}
+
+.cyber-card:hover .cyber-border-trace {
+  opacity: 1;
+}
+
+@keyframes borderSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ── CHROMATIC ABERRATION — RGB split on photo hover ── */
+.cyber-photo-wrap {
+  position: relative;
+}
+
+.cyber-photo {
+  filter: saturate(1.1) contrast(1.05);
+  transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cyber-card:hover .cyber-photo {
+  filter: saturate(1.4) contrast(1.1);
+  transform: scale(1.06);
+}
+
+/* RGB split clone layers */
+.cyber-photo-wrap::before,
+.cyber-photo-wrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: inherit;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.cyber-card:hover .cyber-photo-wrap::before {
+  opacity: 0.4;
+  mix-blend-mode: screen;
+  background: linear-gradient(90deg, rgba(255,0,80,0.15), transparent 50%);
+  transform: translateX(-2px);
+  animation: rgbShiftL 3s ease-in-out infinite;
+}
+
+.cyber-card:hover .cyber-photo-wrap::after {
+  opacity: 0.4;
+  mix-blend-mode: screen;
+  background: linear-gradient(90deg, transparent 50%, rgba(0,200,255,0.15));
+  transform: translateX(2px);
+  animation: rgbShiftR 3s ease-in-out infinite;
+}
+
+@keyframes rgbShiftL {
+  0%, 100% { transform: translateX(-2px); }
+  30% { transform: translateX(-4px) translateY(1px); }
+  70% { transform: translateX(-1px) translateY(-1px); }
+}
+
+@keyframes rgbShiftR {
+  0%, 100% { transform: translateX(2px); }
+  30% { transform: translateX(4px) translateY(-1px); }
+  70% { transform: translateX(1px) translateY(1px); }
+}
+
+/* ── GLITCH BURST — fast noise flash on hover enter ── */
+@keyframes cyberGlitch {
+  0% {
+    clip-path: inset(40% 0 20% 0);
+    background: repeating-linear-gradient(0deg, rgba(0,240,255,0.08), rgba(255,42,138,0.06) 2px, transparent 4px);
+    transform: translate(-3px, 1px) skewX(-2deg);
+  }
+  25% {
+    clip-path: inset(10% 0 60% 0);
+    transform: translate(3px, -2px) skewX(1deg);
+  }
+  50% {
+    clip-path: inset(70% 0 5% 0);
+    background: repeating-linear-gradient(0deg, rgba(180,74,255,0.06), rgba(0,240,255,0.04) 3px, transparent 5px);
+    transform: translate(-2px, 2px) skewX(-1deg);
+  }
+  75% {
+    clip-path: inset(20% 0 40% 0);
+    transform: translate(4px, -1px) skewX(2deg);
+  }
+  100% {
+    clip-path: inset(0);
+    background: transparent;
+    transform: none;
+  }
+}
+
+/* ── CYBER LINK — neon pulse on hover ── */
+.cyber-link {
+  position: relative;
+  overflow: hidden;
+}
+
+.cyber-link::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(0,240,255,0.08), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.4s;
+}
+
+.cyber-link:hover::before {
+  transform: translateX(100%);
+}
+
+/* ── RANK BADGE neon glow animation ── */
+.cyber-rank {
+  position: relative;
+}
+
+.cyber-rank::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, currentColor, transparent 60%);
+  opacity: 0.15;
+  z-index: -1;
+}
+
+/* ── DATA STREAM — animated decorative lines ── */
+.data-stream {
+  position: relative;
+  width: 100%;
+  height: 1px;
+  overflow: hidden;
+  margin: 3rem auto;
+}
+
+.data-stream::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, #00f0ff, #b44aff, transparent);
+  animation: dataFlow 3s ease-in-out infinite;
+}
+
+@keyframes dataFlow {
+  0% { left: -50%; }
+  100% { left: 100%; }
+}
+
+/* ── CYBER HERO ENHANCEMENTS ── */
+.cyber-hero-title {
+  position: relative;
+}
+
+/* Chromatic aberration on hero title hover */
+.cyber-hero-title::before,
+.cyber-hero-title::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #00f0ff 0%, #80ffea 40%, #b44aff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  pointer-events: none;
+}
+
+.cyber-hero-title::before {
+  opacity: 0;
+  animation: heroGlitchR 6s infinite;
+  clip-path: inset(0 0 65% 0);
+}
+
+.cyber-hero-title::after {
+  opacity: 0;
+  animation: heroGlitchL 6s infinite;
+  clip-path: inset(65% 0 0 0);
+}
+
+@keyframes heroGlitchR {
+  0%, 85%, 100% { opacity: 0; transform: translate(0); }
+  87% { opacity: 0.7; transform: translate(-4px, -2px); color: #ff2a8a; }
+  89% { opacity: 0; }
+  91% { opacity: 0.5; transform: translate(4px, 1px); }
+  93% { opacity: 0; }
+}
+
+@keyframes heroGlitchL {
+  0%, 85%, 100% { opacity: 0; transform: translate(0); }
+  86% { opacity: 0.5; transform: translate(3px, 2px); }
+  88% { opacity: 0; }
+  90% { opacity: 0.7; transform: translate(-3px, -1px); color: #00f0ff; }
+  92% { opacity: 0; }
+}
+
+/* ── HOLOGRAPHIC NOISE TEXTURE overlay for card photos ── */
+.cyber-card:hover .cyber-photo-wrap::before {
+  background-image: 
+    linear-gradient(90deg, rgba(255,0,80,0.1), transparent 50%),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+}
+
+/* ── CRT FLICKER for hero section ── */
+@keyframes crtFlicker {
+  0%, 100% { opacity: 1; }
+  92% { opacity: 1; }
+  93% { opacity: 0.85; }
+  94% { opacity: 1; }
+  96% { opacity: 0.92; }
+  97% { opacity: 1; }
+}
+
+.crt-flicker {
+  animation: crtFlicker 8s infinite;
+}
+
+/* ── NEON TEXT GLOW PULSE ── */
+@keyframes neonPulse {
+  0%, 100% {
+    text-shadow: 0 0 4px currentColor, 0 0 12px currentColor;
+  }
+  50% {
+    text-shadow: 0 0 8px currentColor, 0 0 24px currentColor, 0 0 48px currentColor;
+  }
+}
+
+.neon-pulse {
+  animation: neonPulse 3s ease-in-out infinite;
+}
+
+/* ── HEX GRID PATTERN — cyberpunk background ── */
+.hex-grid {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%2300f0ff' fill-opacity='0.02'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* ── RANK PULSE (override for glowing badges) ── */
+@keyframes rankPulse {
+  0%, 100% {
+    text-shadow: 0 0 12px currentColor;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5), 0 0 12px currentColor;
+  }
+  50% {
+    text-shadow: 0 0 28px currentColor, 0 0 50px currentColor;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5), 0 0 24px currentColor, 0 0 48px currentColor;
+  }
+}
+
+/* ── CORNER DECORATIONS — circuit board corners ── */
+.cyber-corners::before,
+.cyber-corners::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-color: rgba(0,240,255,0.2);
+  border-style: solid;
+  z-index: 40;
+  transition: border-color 0.3s;
+}
+
+.cyber-corners::before {
+  top: -1px;
+  left: -1px;
+  border-width: 1px 0 0 1px;
+}
+
+.cyber-corners::after {
+  bottom: -1px;
+  right: -1px;
+  border-width: 0 1px 1px 0;
+}
+
+.cyber-corners:hover::before,
+.cyber-corners:hover::after {
+  border-color: rgba(0,240,255,0.5);
+}
