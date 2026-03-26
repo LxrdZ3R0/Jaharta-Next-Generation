@@ -62,6 +62,36 @@
   }
 }
 
+/* ═══ Futuristic Card (Hyperplexed-style) ═══ */
+.futuristic-card-wrapper {
+  perspective: 1000px;
+}
+
+.futuristic-card {
+  position: relative;
+  border-radius: 0.5rem;
+  cursor: default;
+}
+
+.futuristic-card-inner {
+  will-change: transform;
+}
+
+/* Hover state: elevate border color */
+.futuristic-card:hover .futuristic-card-inner {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Rank pulse keyframe (used on SSS+ ranks) */
+@keyframes rankPulse {
+  0%, 100% {
+    text-shadow: 0 0 12px currentColor;
+  }
+  50% {
+    text-shadow: 0 0 28px currentColor, 0 0 50px currentColor;
+  }
+}
+
 /* Scanline overlay */
 body::after {
   content: '';
