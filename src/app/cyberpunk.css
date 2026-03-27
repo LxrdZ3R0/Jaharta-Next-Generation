@@ -345,3 +345,160 @@
   border-color: rgba(180,74,255,0.7);
   box-shadow: 3px 3px 15px rgba(180,74,255,0.15);
 }
+
+/* ── ELECTRIC PULSE — ripple ring expanding from click point ── */
+@keyframes electricPulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+    box-shadow: 0 0 20px currentColor;
+  }
+  100% {
+    transform: scale(40);
+    opacity: 0;
+    box-shadow: 0 0 2px currentColor;
+  }
+}
+
+/* ── CARD HOVER DISTORTION WAVE ── */
+@keyframes hoverDistort {
+  0% { clip-path: inset(0); }
+  10% { clip-path: inset(2% 0 95% 0); }
+  15% { clip-path: inset(0); }
+  40% { clip-path: inset(70% 0 5% 0); }
+  45% { clip-path: inset(0); }
+  70% { clip-path: inset(20% 0 60% 0); }
+  75% { clip-path: inset(0); }
+  100% { clip-path: inset(0); }
+}
+
+/* ── ANIMATED NOISE GRAIN — more aggressive ── */
+@keyframes grainShift {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-5%, -10%); }
+  20% { transform: translate(-15%, 5%); }
+  30% { transform: translate(7%, -25%); }
+  40% { transform: translate(-5%, 25%); }
+  50% { transform: translate(-15%, 10%); }
+  60% { transform: translate(15%, 0%); }
+  70% { transform: translate(0%, 15%); }
+  80% { transform: translate(3%, 35%); }
+  90% { transform: translate(-10%, 10%); }
+}
+
+.animated-grain::before {
+  content: "";
+  position: fixed;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9997;
+  animation: grainShift 0.5s steps(10) infinite;
+}
+
+/* ── NEON UNDERLINE — animated glow underline ── */
+.neon-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.neon-underline::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: currentColor;
+  box-shadow: 0 0 6px currentColor, 0 0 12px currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.neon-underline:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* ── CARD FLICKER on load ── */
+@keyframes cardFlickerIn {
+  0% { opacity: 0; filter: brightness(3) blur(2px); }
+  15% { opacity: 1; filter: brightness(2) blur(0px); }
+  30% { opacity: 0.7; filter: brightness(1); }
+  45% { opacity: 1; filter: brightness(1.5); }
+  60% { opacity: 0.85; }
+  100% { opacity: 1; filter: brightness(1) blur(0px); }
+}
+
+/* ── HOLOGRAM INTERFERENCE — on card body ── */
+.cyber-card:hover .cyber-card-body::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 35;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 3px,
+    rgba(0,240,255,0.015) 3px,
+    rgba(0,240,255,0.015) 4px
+  );
+  mix-blend-mode: screen;
+  animation: interferenceScroll 8s linear infinite;
+}
+
+@keyframes interferenceScroll {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 200px; }
+}
+
+/* ── FEATURE CARDS — aggressive hover ── */
+.feature-card-cyber {
+  position: relative;
+  transition: all 0.35s;
+}
+
+.feature-card-cyber::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.4s;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    #00f0ff 6%,
+    transparent 12%,
+    transparent 50%,
+    #b44aff 56%,
+    transparent 62%
+  );
+  animation: borderSpin 4s linear infinite;
+  z-index: -1;
+}
+
+.feature-card-cyber:hover::before {
+  opacity: 1;
+}
+
+.feature-card-cyber:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow:
+    0 0 30px rgba(0,240,255,0.15),
+    0 20px 60px rgba(0,0,0,0.5);
+}
+
+/* ── NAV CARD NEON UPGRADE ── */
+.nav-card-cyber:hover {
+  box-shadow:
+    0 0 30px var(--card-accent, rgba(0,240,255,0.2)),
+    0 20px 60px rgba(0,0,0,0.5),
+    inset 0 0 40px var(--card-accent, rgba(0,240,255,0.03));
+}
+

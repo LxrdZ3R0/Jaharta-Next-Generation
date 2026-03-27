@@ -1,5 +1,6 @@
 "use client";
-import { Reveal } from "@/components/ui/reveal";
+import { GlitchReveal, NeonFlash } from "@/components/ui/gsap-effects";
+import { Magnetic } from "@/components/ui/magnetic";
 
 const DiscordIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
@@ -11,34 +12,44 @@ export function DiscordBanner() {
   return (
     <section className="relative px-8 py-16">
       <div className="mx-auto max-w-[1100px]">
-        <Reveal>
-          <div className="relative flex flex-wrap items-center justify-between gap-5 overflow-hidden rounded border border-[#7289da]/25 bg-gradient-to-br from-[#7289da]/[0.08] to-[#7289da]/[0.03] p-8 backdrop-blur-xl md:p-10">
-            {/* Left accent */}
-            <div className="absolute left-0 top-0 h-full w-[3px] rounded-l bg-gradient-to-b from-[#7289da] to-transparent" />
+        <GlitchReveal>
+          <div
+            className="cyber-corners relative flex flex-wrap items-center justify-between gap-5 overflow-hidden rounded-lg border border-[#7289da]/30 bg-[#08080f] p-8 md:p-10"
+            style={{
+              boxShadow: "0 0 40px rgba(114,137,218,0.08), inset 0 0 40px rgba(114,137,218,0.03)",
+            }}
+          >
+            {/* Left neon accent */}
+            <div className="absolute left-0 top-0 h-full w-[3px] rounded-l bg-gradient-to-b from-[#7289da] via-[#7289da] to-transparent" style={{ boxShadow: "0 0 12px rgba(114,137,218,0.4)" }} />
 
             <div className="flex items-center gap-4">
-              <DiscordIcon className="h-10 w-10 shrink-0 text-[#7289da] opacity-80" />
+              <DiscordIcon className="h-10 w-10 shrink-0 text-[#7289da] drop-shadow-[0_0_8px_rgba(114,137,218,0.5)]" />
               <div>
-                <div className="font-display text-[0.88rem] font-bold tracking-[0.12em] text-white">
+                <div className="font-display text-[0.9rem] font-bold tracking-[0.12em] text-white" style={{ textShadow: "0 0 20px rgba(114,137,218,0.3)" }}>
                   Rejoignez le serveur Jaharta
                 </div>
-                <div className="font-heading text-[0.7rem] font-medium tracking-[0.08em] text-white/40">
+                <div className="font-heading text-[0.7rem] font-medium tracking-[0.08em] text-white/35">
                   Communauté · Événements RP · Annonces · Soumission de fiches
                 </div>
               </div>
             </div>
 
-            <a
-              href="https://discord.gg/jBMnmeR944"
-              target="_blank"
-              rel="noopener"
-              className="inline-flex items-center gap-2 whitespace-nowrap rounded-sm bg-[#7289da]/80 px-6 py-3 font-display text-[0.65rem] font-bold uppercase tracking-[0.18em] text-white shadow-[0_0_16px_rgba(114,137,218,0.15)] transition-all hover:-translate-y-0.5 hover:bg-[#7289da] hover:shadow-[0_0_30px_rgba(114,137,218,0.4)]"
-            >
-              <DiscordIcon className="h-4 w-4" />
-              discord.gg/jBMnmeR944
-            </a>
+            <Magnetic strength={0.2}>
+              <a
+                href="https://discord.gg/jBMnmeR944"
+                target="_blank"
+                rel="noopener"
+                className="inline-flex items-center gap-2 whitespace-nowrap rounded bg-[#7289da] px-6 py-3 font-display text-[0.65rem] font-bold uppercase tracking-[0.18em] text-white transition-all hover:-translate-y-1"
+                style={{
+                  boxShadow: "0 0 20px rgba(114,137,218,0.3), 0 0 50px rgba(114,137,218,0.1)",
+                }}
+              >
+                <DiscordIcon className="h-4 w-4" />
+                discord.gg/jBMnmeR944
+              </a>
+            </Magnetic>
           </div>
-        </Reveal>
+        </GlitchReveal>
       </div>
     </section>
   );
@@ -46,38 +57,58 @@ export function DiscordBanner() {
 
 export function FinalCTA() {
   return (
-    <section className="px-8 py-24 text-center">
-      <Reveal>
-        <p className="mb-4 font-display text-[clamp(1.5rem,4vw,2.5rem)] font-bold tracking-[0.15em] text-white/90">
-          Êtes-vous prêts à assumer vos choix&nbsp;?
+    <section className="relative px-8 py-28 text-center">
+      <div className="hex-grid pointer-events-none absolute inset-0 opacity-15" />
+
+      <div className="relative">
+        <div className="data-stream mx-auto mb-10 max-w-[300px]" />
+
+        <NeonFlash color="#00f0ff">
+          <p
+            className="mb-4 font-display text-[clamp(1.8rem,5vw,3rem)] font-black tracking-[0.12em] text-white/90"
+            style={{ textShadow: "0 0 30px rgba(0,240,255,0.2)" }}
+          >
+            Êtes-vous prêts à assumer vos choix&nbsp;?
+          </p>
+        </NeonFlash>
+
+        <p className="mb-10 font-body text-lg font-light text-white/30">
+          Jaharta ne se comprend pas en le lisant — mais en le <span className="font-medium text-magenta" style={{ textShadow: "0 0 15px rgba(255,42,138,0.4)" }}>vivant</span>.
         </p>
-        <p className="mb-10 font-body text-base font-light text-white/40">
-          Jaharta ne se comprend pas en le lisant — mais en le vivant.
-        </p>
-        <a
-          href="https://discord.gg/jBMnmeR944"
-          target="_blank"
-          rel="noopener"
-          className="group/cta relative inline-flex items-center gap-3 overflow-hidden rounded-sm bg-gradient-to-br from-cyan to-emerald-200 px-10 py-4 font-heading text-sm font-semibold uppercase tracking-[0.15em] text-jaharta-deep shadow-glow-md transition-all hover:-translate-y-0.5 hover:shadow-glow-lg"
-        >
-          <DiscordIcon className="h-[18px] w-[18px]" />
-          Entrer dans Jaharta
-          <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-500 group-hover/cta:translate-x-full" />
-        </a>
-      </Reveal>
+
+        <Magnetic strength={0.25}>
+          <a
+            href="https://discord.gg/jBMnmeR944"
+            target="_blank"
+            rel="noopener"
+            className="group/cta relative inline-flex items-center gap-3 overflow-hidden rounded bg-gradient-to-br from-cyan via-[#40ffd0] to-cyan px-14 py-5 font-heading text-base font-bold uppercase tracking-[0.18em] text-jaharta-deep transition-all hover:-translate-y-1 hover:scale-[1.03]"
+            style={{
+              boxShadow: "0 0 30px rgba(0,240,255,0.4), 0 0 60px rgba(0,240,255,0.15), 0 0 100px rgba(0,240,255,0.05)",
+            }}
+          >
+            <DiscordIcon className="h-5 w-5" />
+            Entrer dans Jaharta
+            <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-700 group-hover/cta:translate-x-full" />
+          </a>
+        </Magnetic>
+
+        <div className="data-stream mx-auto mt-10 max-w-[300px]" />
+      </div>
     </section>
   );
 }
 
 export function Footer() {
   return (
-    <footer className="border-t border-white/[0.06] px-8 pb-6 pt-10">
+    <footer className="relative border-t border-cyan/[0.08] px-8 pb-6 pt-10">
+      <div className="pointer-events-none absolute left-0 right-0 top-0 h-px" style={{ background: "linear-gradient(90deg, transparent, rgba(0,240,255,0.3), rgba(255,42,138,0.2), rgba(180,74,255,0.3), transparent)", boxShadow: "0 0 10px rgba(0,240,255,0.15)" }} />
+
       <div className="mx-auto flex max-w-[1100px] flex-wrap items-center justify-between gap-8">
         <div>
-          <div className="font-display text-[0.8rem] font-extrabold tracking-[0.25em] text-cyan-dim">
+          <div className="font-display text-[0.8rem] font-extrabold tracking-[0.25em] text-cyan/60" style={{ textShadow: "0 0 10px rgba(0,240,255,0.2)" }}>
             JAHARTA // RP
           </div>
-          <div className="mt-1 font-heading text-[0.65rem] font-medium tracking-[0.12em] text-white/15">
+          <div className="mt-1 font-heading text-[0.65rem] font-medium tracking-[0.12em] text-white/10">
             Univers Jaharta · Roleplay Officiel
           </div>
         </div>
@@ -88,24 +119,20 @@ export function Footer() {
             { href: "/portail", label: "Portail" },
             { href: "/races", label: "Races" },
             { href: "/admin", label: "Admin" },
-            {
-              href: "https://discord.gg/jBMnmeR944",
-              label: "Discord ↗",
-              external: true,
-            },
+            { href: "https://discord.gg/jBMnmeR944", label: "Discord ↗", external: true },
           ].map((l) => (
             <a
               key={l.href}
               href={l.href}
               {...(l.external ? { target: "_blank", rel: "noopener" } : {})}
-              className="font-heading text-[0.65rem] font-medium tracking-[0.1em] text-white/30 transition-colors hover:text-cyan"
+              className="neon-underline font-heading text-[0.65rem] font-medium tracking-[0.1em] text-white/25 transition-colors hover:text-cyan"
             >
               {l.label}
             </a>
           ))}
         </div>
       </div>
-      <div className="mt-6 border-t border-white/[0.04] pt-6 text-center font-heading text-[0.6rem] font-medium tracking-[0.2em] text-white/10">
+      <div className="mt-6 border-t border-white/[0.03] pt-6 text-center font-heading text-[0.55rem] font-medium tracking-[0.2em] text-white/[0.06]">
         © 2024 — 2026 JAHARTA RP · TOUS DROITS RÉSERVÉS
       </div>
     </footer>

@@ -1,11 +1,12 @@
 "use client";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { RACES, RANKS } from "@/lib/constants";
 import { detectLinkType } from "@/lib/helpers";
 import type { Fiche } from "@/lib/types";
 import { STAT_DEFS, HIGH_RANKS } from "@/lib/types";
 import { useHolographicCard } from "@/hooks/useHolographicCard";
 import { useTextScramble } from "@/hooks/useTextScramble";
+import { useParticleBurst } from "@/hooks/useParticleBurst";
 import { useCallback } from "react";
 
 interface FicheCardProps {
@@ -28,12 +29,18 @@ export function FicheCard({ fiche, isAdmin, onEdit, onDelete }: FicheCardProps) 
   const { ref, state, tiltX, tiltY, holoAngle, handlers } = useHolographicCard();
   const firstScramble = useTextScramble(fiche.firstname || "");
   const lastScramble = useTextScramble(fiche.lastname || "");
+  const { canvasRef: burstCanvas, burst } = useParticleBurst(rc.color);
 
-  const handleEnter = useCallback(() => {
+  const handleEnter = useCallback((e: React.MouseEvent) => {
     handlers.onMouseEnter();
     firstScramble.scramble();
     lastScramble.scramble();
-  }, [handlers, firstScramble, lastScramble]);
+    // Particle burst from mouse position
+    const rect = ref.current?.getBoundingClientRect();
+    if (rect) {
+      burst(e.clientX - rect.left, e.clientY - rect.top);
+    }
+  }, [handlers, firstScramble, lastScramble, burst, ref]);
 
   const handleLeave = useCallback(() => {
     handlers.onMouseLeave();
@@ -69,6 +76,27 @@ export function FicheCard({ fiche, isAdmin, onEdit, onDelete }: FicheCardProps) 
       >
         {/* ═══ NEON BORDER TRACE — animated light traveling around border ═══ */}
         <div className="cyber-border-trace" />
+
+        {/* ═══ PARTICLE BURST canvas — sparks on hover enter ═══ */}
+        <canvas
+          ref={burstCanvas}
+          className="pointer-events-none absolute inset-0 z-[60] rounded-lg"
+        />
+
+        {/* ═══ ELECTRIC PULSE — ripple ring on hover ═══ */}
+        {state.glitching && (
+          <div
+            className="pointer-events-none absolute z-[55] animate-[electricPulse_0.6s_ease-out_forwards] rounded-full border"
+            style={{
+              left: state.x - 4,
+              top: state.y - 4,
+              width: 8,
+              height: 8,
+              borderColor: rc.color,
+              boxShadow: `0 0 20px ${rc.color}`,
+            }}
+          />
+        )}
 
         {/* ═══ MAIN CARD with 3D TILT ═══ */}
         <div
